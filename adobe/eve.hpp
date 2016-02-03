@@ -13,6 +13,7 @@
 #include <utility>
 
 #include <boost/noncopyable.hpp>
+#include <boost/type_traits.hpp>
 
 #include <adobe/forest.hpp>
 #include <adobe/extents.hpp>
@@ -37,12 +38,12 @@ struct view_proxy_t;
 
 #if !defined(ADOBE_NO_DOCUMENTATION)
 namespace boost {
-namespace detail {
+//namespace detail {
 template <>
-struct is_pod_impl<adobe::implementation::view_proxy_t> {
+struct is_pod<adobe::implementation::view_proxy_t> {
     BOOST_STATIC_CONSTANT(bool, value = true);
 };
-}
+//}
 }
 #endif
 

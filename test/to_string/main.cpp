@@ -14,10 +14,12 @@
 #define BOOST_TEST_MAIN
 
 // boost
+#ifndef _MSC_VER
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunneeded-internal-declaration"
 #include <boost/test/unit_test.hpp>
 #pragma clang diagnostic pop
+#endif
 
 // asl
 #include <adobe/algorithm/for_each.hpp>

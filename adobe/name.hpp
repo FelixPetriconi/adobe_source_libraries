@@ -23,6 +23,7 @@
 #include <adobe/conversion.hpp>
 #include <adobe/cstring.hpp>
 #include <adobe/fnv.hpp>
+#include <boost/test/utils/is_forward_iterable.hpp>
 
 /**
     \defgroup name name_t and static_name_t
@@ -66,7 +67,7 @@ constexpr std::size_t name_hash(const char* str, std::size_t len, std::size_t n,
     static_assert(sizeok_k, "Unknown sizeof std::size_t (must be 4 or 8).");
 
     return n < len ? name_hash(str, len, n + 1,
-                               (state xor static_cast<std::size_t>(str[n])) * name_fnv_prime_k)
+                               (state ^ static_cast<std::size_t>(str[n])) * name_fnv_prime_k)
                    : state;
 }
 

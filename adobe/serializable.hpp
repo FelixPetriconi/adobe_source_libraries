@@ -16,6 +16,7 @@
 #include <double-conversion/src/double-conversion.h>
 
 #include <adobe/typeinfo.hpp>
+#include <memory>
 
 /*************************************************************************************************/
 

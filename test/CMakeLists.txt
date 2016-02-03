@@ -7,9 +7,9 @@ function(asl_test)
   add_executable (${asl_test_NAME} ${asl_test_SOURCES})
   target_link_libraries(${asl_test_NAME} PRIVATE asl)
 
-  if (asl_test_BOOST)
+  #if (asl_test_BOOST)
     target_link_boost_test(${asl_test_NAME})
-  endif(asl_test_BOOST)
+  #endif(asl_test_BOOST)
 
   if (NOT asl_test_SKIPPED)
     add_test (NAME ${asl_test_NAME} COMMAND ${asl_test_NAME} ${asl_test_ARGS})

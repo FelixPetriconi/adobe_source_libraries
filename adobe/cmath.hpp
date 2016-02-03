@@ -59,7 +59,7 @@ back to include math.h. This also needs to add any other C99 math.h extensions.
     The currently supported version of VC++ has no C99 extensions.
 */
 
-#if _MSC_VER > 1600
+#if _MSC_VER < 1700
 #error "Unknown MSC compiler configureation for cmath (last knownversion is VC++ 10.0)."
 #endif
 

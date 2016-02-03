@@ -5,6 +5,10 @@ enable_testing()
 
 project(adobe_source_libraries CXX)
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  add_definitions(/D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /DADOBE_FNV_NO_BIGINTS)
+endif ()
+
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")
@@ -29,7 +33,7 @@ else()
     set(ASL_DOUBLECONV_SUPPORT OFF)
 endif()
 
-if (${ASL_DOUBLECONV_SUPPORT})
+if (ASL_DOUBLECONV_SUPPORT)
     file(GLOB ASL_DOUBELCONV_SRC ../double-conversion/src/*.cc)
 
     add_library(doubleconv_support STATIC ${ASL_DOUBELCONV_SRC})
@@ -38,32 +42,27 @@ if (${ASL_DOUBLECONV_SUPPORT})
 
     target_include_directories(doubleconv_support PUBLIC ${ASL_DOUBLECONV_PATH})
 else()
-    ExternalProject_Add(double-conversion_prj
-        PREFIX ${CMAKE_BINARY_DIR}/thirdparty/double-conversion
-        GIT_REPOSITORY https://github.com/google/double-conversion.git
-        # GIT_REPOSITORY https://github.com/stlab/double-conversion.git
-        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX})
-
-    link_directories(${CMAKE_INSTALL_PREFIX}/lib)
+    include(externals/double_conversion/double_conversion.cmake)
 endif()
 
 function(target_link_doubleconversion target)
-    if (${ASL_DOUBLECONV_SUPPORT})
+    if (ASL_DOUBLECONV_SUPPORT)
         add_dependencies(${target} doubleconv_support)
 
         target_link_libraries(${target} PUBLIC doubleconv_support)
     else()
         #tweak on include double-conversion path
-        target_compile_definitions(${target} PUBLIC -DADOBE_BUILT_WITH_CMAKE)
-        add_dependencies(${target} double-conversion_prj)
-        target_include_directories(${target} PUBLIC ${CMAKE_INSTALL_PREFIX}/include)
-        target_link_libraries(${target} PUBLIC double-conversion)
+        target_compile_definitions(${target} PUBLIC) # -DADOBE_BUILT_WITH_CMAKE)
+        add_dependencies(${target} double-conversion)
+        target_include_directories(${target} PUBLIC ${double_conversion_INCLUDE_DIRS})
+        target_link_libraries(${target} PUBLIC ${double_conversion_LIBRARIES})
     endif()
 endfunction(target_link_doubleconversion)
 
 function(target_link_boost target)
-    if (${BOOST_ROOT})
-        target_link_libraries(${target} PUBLIC ${Boost_SYSTEM_LIBRARY})
+    if (BOOST_ROOT)
+        target_link_libraries(${target} PUBLIC ${Boost_SYSTEM_LIBRARY})     
+        include_directories(${Boost_INCLUDE_DIRS})
     else()
         add_dependencies(${target} boost_glob)
 
@@ -72,9 +71,10 @@ function(target_link_boost target)
 endfunction(target_link_boost)
 
 function(target_link_boost_test target)
-    if (${BOOST_ROOT})
+    if (BOOST_ROOT)
         target_compile_definitions(${asl_test_NAME} PRIVATE BOOST_TEST_DYN_LINK)
         target_link_libraries(${asl_test_NAME} PRIVATE ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+        include_directories(${Boost_INCLUDE_DIRS})
     else()
         add_dependencies(${target} boost_unit_test)
 
@@ -82,10 +82,11 @@ function(target_link_boost_test target)
     endif()
 endfunction(target_link_boost_test)
 
-if (${BOOST_ROOT})
+if (BOOST_ROOT)
     find_package(Boost COMPONENTS system thread unit_test_framework program_options REQUIRED)
 else()
     message("ASL_INFO: Building boost ourselves.")
+    message("=====> ASL_INFO: Not working at least for boost 1.55! <=====")
 
     # There really isn't a need to separate out these sources, so we build them
     # in one large static library.
