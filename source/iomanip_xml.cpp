@@ -26,7 +26,16 @@ namespace adobe {
 
 /*************************************************************************************************/
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4307) // '*': integral constant overflow
+#endif
+
 constexpr static_name_t xml_name_k = "xml"_name;
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 /*************************************************************************************************/
 

@@ -38,6 +38,11 @@ using namespace adobe;
 
 /*************************************************************************************************/
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4307) // '*': integral constant overflow
+#endif
+
 static_name_t constant_k = "constant"_name;
 static_name_t external_k = "external"_name;
 static_name_t input_k = "input"_name;
@@ -49,6 +54,10 @@ static_name_t relate_k = "relate"_name;
 static_name_t sheet_k = "sheet"_name;
 static_name_t unlink_k = "unlink"_name;
 static_name_t when_k = "when"_name;
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 static_name_t keyword_table[] = {constant_k, external_k, input_k, interface_k, invariant_k, logic_k,
                                  output_k,   relate_k,   sheet_k, unlink_k,    when_k, };

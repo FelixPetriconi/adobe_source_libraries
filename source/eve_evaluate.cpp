@@ -40,6 +40,11 @@ placement_table_t;
 
 using namespace adobe::literals;
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4307) // '*': integral constant overflow
+#endif
+
 adobe::static_name_t key_spacing = "spacing"_name;
 adobe::static_name_t key_indent = "indent"_name;
 adobe::static_name_t key_margin = "margin"_name;
@@ -70,6 +75,10 @@ adobe::static_name_t key_guide_balance = "guide_balance"_name;
 
 adobe::static_name_t key_guide_baseline = "guide_baseline"_name;
 adobe::static_name_t key_guide_label = "guide_label"_name;
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 // blank(guide_attach: {left: @guide_baseline});
 

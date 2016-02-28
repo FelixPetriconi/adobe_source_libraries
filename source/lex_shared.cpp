@@ -13,7 +13,16 @@ namespace adobe {
 
 /*************************************************************************************************/
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4307) // '*': integral constant overflow
+#endif
+
 static_name_t eof_k = "eof"_name;
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 /*************************************************************************************************/
 

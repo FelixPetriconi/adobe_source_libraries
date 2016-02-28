@@ -19,7 +19,16 @@
 #pragma clang diagnostic ignored "-Wunneeded-internal-declaration"
 #include <boost/test/unit_test.hpp>
 #pragma clang diagnostic pop
+#else
+#include <boost/test/unit_test.hpp>
 #endif
+
+#ifndef DBL_TRUE_MIN
+/* DBL_TRUE_MIN is a common non-standard extension for the minimum denorm value
+ * DBL_MIN is the minimum non-denorm value -- use that if TRUE_MIN is not defined */
+#define DBL_TRUE_MIN DBL_MIN
+#endif
+
 
 // asl
 #include <adobe/algorithm/for_each.hpp>
@@ -82,7 +91,7 @@ test_t suite_g[] = {
     { 1.1, "1.1" },
     { DBL_MIN, "DBL_MIN" },
     { DBL_MAX, "DBL_MAX" },
-    { __DBL_DENORM_MIN__, "__DBL_DENORM_MIN__" }
+    { DBL_TRUE_MIN , "DBL_TRUE_MIN" }
 };
 
 /******************************************************************************/

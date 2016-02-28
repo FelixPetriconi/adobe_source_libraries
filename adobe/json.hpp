@@ -162,7 +162,7 @@ class json_parser {
             T::append(s, f, p_);
             if (!is_char('\\')) continue;
             char c = escape()[static_cast<unsigned char>(*p_++)];
-            require(c, "valid escape character");
+            require(c != 0, "valid escape character");
             if (c == 'u') {
                 std::uint32_t utf = get_four_digits();
                 // handle surrogate leading
@@ -543,14 +543,14 @@ class json_generator {
     
     void generate_(const object_type& value, std::size_t n) {
         *out_++ = '{';
-        if (list(begin(value), end(value), n)) indent(n);
+        if (list(std::begin(value), std::end(value), n)) indent(n);
         else space();
         *out_++ = '}';
     }
     
     void generate_(const array_type& value, std::size_t n) {
         *out_++ = '[';
-        if (list(begin(value), end(value), n)) indent(n);
+        if (list(std::begin(value), std::end(value), n)) indent(n);
         else space();
         *out_++ = ']';
     }

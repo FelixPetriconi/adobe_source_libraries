@@ -87,10 +87,10 @@ int main(int argc, char* argv[]) {
                                                       end = input_files.end();
              i != end; ++i) {
             boost::filesystem::path in_path(*i);
-            std::ifstream in_stream(in_path.native().c_str());
+            std::ifstream in_stream(in_path.generic_string().c_str());
             if (!in_stream.is_open())
                 std::cerr << "Could not open \"" << in_path << "\"!\n";
-            if (!adobe::parse(in_stream, adobe::line_position_t(in_path.native().c_str()),
+            if (!adobe::parse(in_stream, adobe::line_position_t(in_path.generic_string().c_str()),
                               std::cout))
                 success = false;
         }

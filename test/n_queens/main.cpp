@@ -12,6 +12,10 @@
 #include <iostream>
 #include <limits>
 
+#ifdef _MSC_VER
+#undef max
+#endif
+
 /****************************************************************************************************/
 
 namespace {

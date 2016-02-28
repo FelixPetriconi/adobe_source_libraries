@@ -21,6 +21,10 @@
 #include <adobe/string.hpp>
 #include <adobe/timer.hpp>
 
+#ifdef _MSC_VER
+#undef max
+#endif
+
 /**************************************************************************************************/
 
 #define ADOBE_TEST_SHA_MILLION_A_STRING 0

@@ -33,6 +33,11 @@ using namespace adobe;
 
 /*************************************************************************************************/
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4307) // '*': integral constant overflow
+#endif
+
 static_name_t constant_k = "constant"_name;
 static_name_t interface_k = "interface"_name;
 static_name_t layout_k = "layout"_name;
@@ -41,6 +46,10 @@ static_name_t relate_k = "relate"_name;
 static_name_t unlink_k = "unlink"_name;
 static_name_t view_k = "view"_name;
 static_name_t when_k = "when"_name;
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 static_name_t keyword_table[] = {constant_k, interface_k, layout_k, logic_k,
                                  relate_k,   unlink_k,    view_k,   when_k};

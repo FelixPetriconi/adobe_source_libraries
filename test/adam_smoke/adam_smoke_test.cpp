@@ -24,6 +24,7 @@
 #include <adobe/iomanip_asl_cel.hpp>
 
 #include <iostream>
+#include <string>
 
 /****************************************************************************************************/
 
@@ -66,7 +67,7 @@ adobe::dictionary_t read_dictionary(const bfs::path& filepath) {
     adobe::array_t expression;
 
     if (!input_file.is_open()) {
-        std::cout << "Could not open \"" << filepath.native() << "\"!\n";
+        std::cout << "Could not open \"" << filepath.generic_string() << "\"!\n";
 
         throw std::runtime_error("file error");
     }
@@ -86,14 +87,14 @@ void read_sheet(const bfs::path& filepath, adobe::sheet_t& sheet) {
     std::ifstream input_file(filepath.native().c_str());
 
     if (!input_file.is_open()) {
-        std::cout << "Could not open \"" << filepath.native() << "\"!\n";
+        std::cout << "Could not open \"" << filepath.generic_string() << "\"!\n";
 
         throw std::runtime_error("file error");
     }
 
     try {
         // set up adam sheet
-        adobe::parse(input_file, adobe::line_position_t(filepath.native().c_str()),
+        adobe::parse(input_file, adobe::line_position_t(filepath.generic_string().c_str()),
                      adobe::bind_to_sheet(sheet));
     }
     catch (const adobe::stream_error_t& error) {

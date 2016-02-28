@@ -12,5 +12,10 @@ ExternalProject_add(
 ExternalProject_Get_Property(double-conversion INSTALL_DIR)
 
 message(STATUS "INSTALL_DIR: ${INSTALL_DIR}")
-set(double_conversion_LIBRARIES ${INSTALL_DIR}/lib/double-conversion.a)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  set(double_conversion_LIBRARIES ${INSTALL_DIR}/lib/double-conversion.lib)
+else ()
+  set(double_conversion_LIBRARIES ${INSTALL_DIR}/lib/double-conversion.a)
+endif ()
+
 set(double_conversion_INCLUDE_DIRS ${INSTALL_DIR}/src)

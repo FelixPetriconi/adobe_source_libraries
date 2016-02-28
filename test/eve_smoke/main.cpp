@@ -66,7 +66,7 @@ void testParse(boost::filesystem::path& fileName) {
     if (!stream.is_open()) {
         std::stringstream err;
 
-        err << "Could not open file: " << fileName.native();
+        err << "Could not open file: " << fileName.generic_string();
 
         throw std::runtime_error(err.str());
     }
@@ -78,7 +78,7 @@ void testParse(boost::filesystem::path& fileName) {
     adobe::sheet_t layout_sheet;
 
     adobe::parse(
-        stream, adobe::line_position_t(fileName.native().c_str()),
+        stream, adobe::line_position_t(fileName.generic_string().c_str()),
         adobe::eve_callback_suite_t::position_t(),
         adobe::bind_layout(boost::bind(&assemble, _2, _3), layout_sheet, layout_sheet.machine_m));
 }

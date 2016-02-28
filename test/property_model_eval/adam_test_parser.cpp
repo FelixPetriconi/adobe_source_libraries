@@ -52,6 +52,11 @@ using namespace adobe::literals;
 
 keyword_table_t* keyword_table_g;
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable:4307) // '*': integral constant overflow
+#endif
+
 adobe::static_name_t update_k = "update"_name;
 adobe::static_name_t reinitialize_k = "reinitialize"_name;
 adobe::static_name_t dump_k = "dump"_name;
@@ -59,6 +64,10 @@ adobe::static_name_t check_k = "check"_name;
 adobe::static_name_t print_k = "print"_name;
 adobe::static_name_t assert_k = "assert"_name;
 adobe::static_name_t contributing_k = "contributing"_name;
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 /*************************************************************************************************/
 

@@ -61,7 +61,7 @@ endfunction(target_link_doubleconversion)
 
 function(target_link_boost target)
     if (BOOST_ROOT)
-        target_link_libraries(${target} PUBLIC ${Boost_SYSTEM_LIBRARY})     
+        target_link_libraries(${target} PUBLIC ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})     
         include_directories(${Boost_INCLUDE_DIRS})
     else()
         add_dependencies(${target} boost_glob)
@@ -83,7 +83,7 @@ function(target_link_boost_test target)
 endfunction(target_link_boost_test)
 
 if (BOOST_ROOT)
-    find_package(Boost COMPONENTS system thread unit_test_framework program_options REQUIRED)
+    find_package(Boost COMPONENTS filesystem system thread unit_test_framework program_options REQUIRED)
 else()
     message("ASL_INFO: Building boost ourselves.")
     message("=====> ASL_INFO: Not working at least for boost 1.55! <=====")
@@ -153,3 +153,5 @@ endif()
 
 add_subdirectory(source)
 add_subdirectory(test)
+
+

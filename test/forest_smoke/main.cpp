@@ -5,6 +5,7 @@
 */
 
 #include <iostream>
+#include <string>
 #include <limits>
 #include <new>
 #include <cassert>
@@ -22,7 +23,7 @@ void output(const R& f) {
             std::cout << "\t";
         }
         if (first.edge() == adobe::forest_leading_edge) {
-            std::cout << "<" << *first << ">" << std::endl;
+            std::cout << "<"  << *first << ">" << std::endl;
         } else {
             std::cout << "</" << *first << ">" << std::endl;
         }
