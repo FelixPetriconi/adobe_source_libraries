@@ -20,6 +20,14 @@ CMake support also exists for Unix Makefiles and XCode. CMake will generate sepa
 
 If you have `BOOST_ROOT` defined, Boost headers and libraries will be included in the build automatically. Otherwise, CMake will generate what is necessary to build Boost dependencies as a static library.
 
+### Windows
+It is neccessary to define the BOOST_ROOT and BOOST_LIBRARYDIR during the setup.
+
+mkdir asl_build
+cd asl_build
+cmake -G "Visual Studio 14 2015 Win64" -D BOOST_ROOT=D:/boost_1_60_0 -D BOOST_LIBRARYDIR=D:/boost_1_60_0/stage/lib ../adobe_source_libraries
+
+
 ### Makefiles
 
 This option is invoked from the `./cmake_build_all.sh` script. It includes the ability to auto-download the double-conversion library.

@@ -83,7 +83,12 @@ function(target_link_boost_test target)
 endfunction(target_link_boost_test)
 
 if (BOOST_ROOT)
+
+    if (APPLE OR WIN32)
+        set(Boost_USE_STATIC_LIBS TRUE)
+    endif()
     find_package(Boost COMPONENTS filesystem system thread unit_test_framework program_options REQUIRED)
+    LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})     
 else()
     message("ASL_INFO: Building boost ourselves.")
     message("=====> ASL_INFO: Not working at least for boost 1.55! <=====")
